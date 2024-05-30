@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Layout</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        body {
+            background-color: #2e2e2e;
+            color: #ffffff;
+        }
+        .chart-container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #333333;
+            border-radius: 8px;
+        }
+        .details {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+        const labels = ['Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024', 'Aug 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024'];
+        const handFlyerData = [320, 450, 520, 630, 710, 830, 910, 1020, 1110, 1230, 1340, 1450];
+        const doorFlyerData = [250, 360, 470, 580, 690, 800, 920, 1030, 1140, 1250, 1370, 1480];
+        const totalFlyerData = handFlyerData.map((num, idx) => num + doorFlyerData[idx]);
+        const qrHandData = [20, 3, 40, 55, 60, 70, 18, 90, 10, 110, 120, 200];
+        const qrDoorData = [15, 25, 5, 45, 55, 65, 15, 85, 95, 105, 115, 15];
+        const qrTotalData = qrHandData.map((num, idx) => num + qrDoorData[idx]);
+
+        let myChart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'HandFlyer',
+                            data: handFlyerData,
+                            borderColor: '#00FF00',
+                            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'DoorFlyer',
+                            data: doorFlyerData,
+                            borderColor: '#FFA500',
+                            backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'TotalFlyer',
+                            data: totalFlyerData,
+                            borderColor: '#1E90FF',
+                            backgroundColor: 'rgba(30, 144, 255, 0.2)',
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'QR Hand',
+                            data: qrHandData,
+                            borderColor: '#FF4500',
+                            backgroundColor: 'rgba(255, 69, 0, 0.2)',
+                            fill: false,
+                            tension: 0.1,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'QR Door',
+                            data: qrDoorData,
+                            borderColor: '#8A2BE2',
+                            backgroundColor: 'rgba(138, 43, 226, 0.2)',
+                            fill: false,
+                            tension: 0.1,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'QR Total',
+                            data: qrTotalData,
+                            borderColor: '#FFD700',
+                            backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                            fill: false,
+                            tension: 0.1,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#444444'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#444444'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Flyer Views',
+                                color: '#ffffff'
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            grid: {
+                                color: '#444444'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            },
+                            title: {
+                                display: true,
+                                text: 'QR Scans',
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                                }
+                            }
+                        },
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                mode: 'x'
+                            },
+                            zoom: {
+                                enabled: true,
+                                mode: 'x',
+                                speed: 0.1
+                            }
+                        },
+                        annotation: {
+                            annotations: []
+                        }
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 2
+                        },
+                        point: {
+                            radius: 5,
+                            hoverRadius: 7,
+                            hitRadius: 10
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    onClick: function(evt) {
+                        const points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                        if (points.length) {
+                            const firstPoint = points[0];
+                            const label = myChart.data.labels[firstPoint.index];
+                            const valueHandFlyer = myChart.data.datasets[0].data[firstPoint.index];
+                            const valueDoorFlyer = myChart.data.datasets[1].data[firstPoint.index];
+                            const valueTotalFlyer = myChart.data.datasets[2].data[firstPoint.index];
+                            const valueQrHand = myChart.data.datasets[3].data[firstPoint.index];
+                            const valueQrDoor = myChart.data.datasets[4].data[firstPoint.index];
+                            const valueQrTotal = myChart.data.datasets[5].data[firstPoint.index];
+
+                            // Clear previous annotations
+                            myChart.options.plugins.annotation.annotations = [];
+
+                            // Add new annotation for selected point
+                            myChart.options.plugins.annotation.annotations.push({
+                                type: 'label',
+                                drawTime: 'afterDatasetsDraw',
+                                xValue: label,
+                                yValue: valueTotalFlyer,
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                borderColor: 'white',
+                                borderWidth: 1,
+                                content: [
+                                    `Month: ${label}`,
+                                    `HandFlyer: ${valueHandFlyer}`,
+                                    `DoorFlyer: ${valueDoorFlyer}`,
+                                    `TotalFlyer: ${valueTotalFlyer}`,
+                                    `QR Hand: ${valueQrHand}`,
+                                    `QR Door: ${valueQrDoor}`,
+                                    `QR Total: ${valueQrTotal}`
+                                ],
+                                font: {
+                                    size: 12,
+                                    color: 'white'
+                                },
+                                xAdjust: 0,
+                                yAdjust: -10
+                            });
+
+                            // Update the chart to display the annotation
+                            myChart.update();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
