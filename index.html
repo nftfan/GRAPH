@@ -87,22 +87,56 @@
     <div class="container">
         <div class="details">
             <h2>Flyer Performance</h2>
-            <div class="checkboxes">
-                <label><input type="checkbox" id="handFlyerCheckbox"> HandFlyer</label>
-                <label><input type="checkbox" id="doorFlyerCheckbox"> DoorFlyer</label>
-                <label><input type="checkbox" id="totalFlyerCheckbox"> TotalFlyer</label>
-                <label><input type="checkbox" id="qrHandCheckbox"> QR Hand</label>
-                <label><input type="checkbox" id="qrDoorCheckbox"> QR Door</label>
-            </div>
+           <div class="checkboxes">
+    <label><input type="checkbox" id="handFlyerCheckbox"> HandFlyer</label>
+    <label><input type="checkbox" id="doorFlyerCheckbox"> DoorFlyer</label>
+    <label><input type="checkbox" id="totalFlyerCheckbox"> TotalFlyer</label>
+    <label><input type="checkbox" id="qrHandCheckbox"> QR Hand</label>
+    <label><input type="checkbox" id="qrDoorCheckbox"> QR Door</label>
+</div>
+
+<style>
+    .checkboxes {
+        display: flex;
+        gap: 1px;
+    }
+    .checkboxes label {
+        display: flex;
+        align-items: center;
+        margin-right: 1px;
+    }
+    .checkboxes input[type="checkbox"] {
+        margin-right: 5px;
+    }
+</style>
+
             <div class="data-section">
-                <div class="values">
-                    <p>HandFlyer:67 <span id="handFlyer"></span></p>
-                    <p>DoorFlyer:87 <span id="doorFlyer"></span></p>
-                    <p>TotalFlyer:66 <span id="totalFlyer"></span></p>
-                    <p>QR Hand:54 <span id="qrHand"></span></p>
-                    <p>QR Door:77 <span id="qrDoor"></span></p>
-                    <p>QR Total: <span id="qrTotal"></span></p>
-                </div>
+                
+
+<style>
+    .values {
+        font-family: Arial, sans-serif;
+        font-size: 1.2em;
+    }
+    .values p {
+        margin: 10px 0;
+    }
+    .values p span {
+        font-weight: bold;
+        font-size: 1.5em;
+        color: #007BFF; /* Change this color to your preference */
+        margin-left: 10px;
+    }
+</style>
+
+<div class="values">
+    <p>HandFlyer: <span id="handFlyer">67</span></p>
+    <p>DoorFlyer: <span id="doorFlyer">87</span></p>
+    <p>TotalFlyer: <span id="totalFlyer">66</span></p>
+    <p>QR Hand: <span id="qrHand">54</span></p>
+    <p>QR Door: <span id="qrDoor">77</span></p>
+    <p>QR Total: <span id="qrTotal"></span></p>
+</div>
                 <div class="flyer-images">
                     <div>
                         <img src="https://bafybeih2nsbgaw7szabh4mi4grwcqebyruovbrftcjtg3k7ogqbiwqycqm.ipfs.nftstorage.link/" alt="Front of Flyer">
