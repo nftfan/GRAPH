@@ -46,13 +46,22 @@
         }
         .details .data-section {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
             align-items: center;
         }
-        .details img {
-            width: 30%;
+        .details .flyer-images {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .details .flyer-images img {
+            width: 45%;
             border-radius: 8px;
-            margin-left: 20px;
+        }
+        .details .flyer-images div {
+            text-align: center;
         }
         .checkboxes {
             margin-bottom: 20px;
@@ -62,7 +71,15 @@
             margin: 5px 0;
         }
         .values {
+            background: #333333;
+            padding: 15px;
+            border-radius: 8px;
             margin-top: 20px;
+            text-align: left;
+            width: 100%;
+        }
+        .values p {
+            margin: 8px 0;
         }
     </style>
 </head>
@@ -79,14 +96,23 @@
             </div>
             <div class="data-section">
                 <div class="values">
-                    <p>HandFlyer: 1500 <span id="handFlyer"></span></p>
-                    <p>DoorFlyer: 8500 <span id="doorFlyer"></span></p>
-                    <p>TotalFlyer: 10000 <span id="totalFlyer"></span></p>
-                    <p>QR Hand: 23 <span id="qrHand"></span></p>
-                    <p>QR Door: 66 <span id="qrDoor"></span></p>
-                    <p>QR Total:89 <span id="qrTotal"></span></p>
+                    <p>HandFlyer:67 <span id="handFlyer"></span></p>
+                    <p>DoorFlyer:87 <span id="doorFlyer"></span></p>
+                    <p>TotalFlyer:66 <span id="totalFlyer"></span></p>
+                    <p>QR Hand:54 <span id="qrHand"></span></p>
+                    <p>QR Door:77 <span id="qrDoor"></span></p>
+                    <p>QR Total: <span id="qrTotal"></span></p>
                 </div>
-                <img src="https://bafybeih2nsbgaw7szabh4mi4grwcqebyruovbrftcjtg3k7ogqbiwqycqm.ipfs.nftstorage.link/" alt="Flyer Image">
+                <div class="flyer-images">
+                    <div>
+                        <img src="https://bafybeih2nsbgaw7szabh4mi4grwcqebyruovbrftcjtg3k7ogqbiwqycqm.ipfs.nftstorage.link/" alt="Front of Flyer">
+                        <p>Front</p>
+                    </div>
+                    <div>
+                        <img src="https://bafybeih2nsbgaw7szabh4mi4grwcqebyruovbrftcjtg3k7ogqbiwqycqm.ipfs.nftstorage.link/" alt="Back of Flyer">
+                        <p>Back</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="chart-container">
