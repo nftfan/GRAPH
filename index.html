@@ -20,13 +20,12 @@
             padding: 20px;
         }
         .chart-container {
-    width: 70%;
-    background-color: #333333;
-    padding: 20px;
-    border-radius: 8px;
-    height: 790px; /* Setting the height to 700px */
-}
-
+            width: 70%;
+            background-color: #333333;
+            padding: 20px;
+            border-radius: 8px;
+            height: 790px;
+        }
         .details {
             width: 25%;
             background-color: #444444;
@@ -83,76 +82,80 @@
         .values p {
             margin: 8px 0;
         }
+        .customer-calculation {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #ffd700;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="details">
             <h2>Flyer Performance</h2>
-           <div class="checkboxes">
-    <label><input type="checkbox" id="handFlyerCheckbox"> HandFlyer</label>
-    <label><input type="checkbox" id="doorFlyerCheckbox"> DoorFlyer</label>
-    <label><input type="checkbox" id="totalFlyerCheckbox"> TotalFlyer</label>
-    <label><input type="checkbox" id="qrHandCheckbox"> QR Hand</label>
-    <label><input type="checkbox" id="qrDoorCheckbox"> QR Door</label>
-</div>
+            <div class="checkboxes">
+                <label><input type="checkbox" id="handFlyerCheckbox"> HandFlyer</label>
+                <label><input type="checkbox" id="doorFlyerCheckbox"> DoorFlyer</label>
+                <label><input type="checkbox" id="totalFlyerCheckbox"> TotalFlyer</label>
+                <label><input type="checkbox" id="qrHandCheckbox"> QR Hand</label>
+                <label><input type="checkbox" id="qrDoorCheckbox"> QR Door</label>
+            </div>
 
-<style>
-    .checkboxes {
-        display: flex;
-        gap: 1px;
-    }
-    .checkboxes label {
-        display: flex;
-        align-items: center;
-        margin-right: 1px;
-    }
-    .checkboxes input[type="checkbox"] {
-        margin-right: 5px;
-    }
-</style>
+            <style>
+                .checkboxes {
+                    display: flex;
+                    gap: 1px;
+                }
+                .checkboxes label {
+                    display: flex;
+                    align-items: center;
+                    margin-right: 1px;
+                }
+                .checkboxes input[type="checkbox"] {
+                    margin-right: 5px;
+                }
+            </style>
 
             <div class="data-section">
-                
+                <style>
+                    .values {
+                        font-family: Arial, sans-serif;
+                        max-width: 400px;
+                        margin: 40px auto;
+                        padding: 20px;
+                        background-color: #333333;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    }
+                    .values p {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin: 15px 0;
+                        padding-bottom: 10px;
+                        border-bottom: 1px solid #f0f0f0;
+                        font-size: 1.1em;
+                    }
+                    .values p:last-child {
+                        border-bottom: none;
+                    }
+                    .values p span {
+                        font-weight: bold;
+                        font-size: 1.3em;
+                        color: #ffffff;
+                    }
+                </style>
 
-<style>
-    .values {
-        font-family: Arial, sans-serif;
-        max-width: 400px;
-        margin: 40px auto;
-        padding: 20px;
-        background-color: #333333;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .values p {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 15px 0;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #f0f0f0;
-        font-size: 1.1em;
-    }
-    .values p:last-child {
-        border-bottom: none;
-    }
-    .values p span {
-        font-weight: bold;
-        font-size: 1.3em;
-        color: #ffffff; /* Change this color to your preference */
-    }
-</style>
-
-<div class="values">
-    <p>HandFlyer: <span id="handFlyer">67</span></p>
-    <p>DoorFlyer: <span id="doorFlyer">87</span></p>
-    <p>TotalFlyer: <span id="totalFlyer">66</span></p>
-    <p>QR Hand: <span id="qrHand">54</span></p>
-    <p>QR Door: <span id="qrDoor">77</span></p>
-    <p>QR Total: <span id="qrTotal">77</span></p>
-</div>
+                <div class="values">
+                    <p>HandFlyer: <span id="handFlyer">67</span></p>
+                    <p>DoorFlyer: <span id="doorFlyer">87</span></p>
+                    <p>TotalFlyer: <span id="totalFlyer">66</span></p>
+                    <p>QR Hand: <span id="qrHand">54</span></p>
+                    <p>QR Door: <span id="qrDoor">77</span></p>
+                    <p>QR Total: <span id="qrTotal">77</span></p>
+                </div>
 
                 <div class="flyer-images">
                     <div>
@@ -168,6 +171,11 @@
         </div>
         <div class="chart-container">
             <canvas id="myChart"></canvas>
+            <div class="customer-calculation">
+                Number of HandFlyers brought 1 customer: <span id="handFlyerCustomerRatio">N/A</span><br>
+                Number of DoorFlyers brought 1 customer: <span id="doorFlyerCustomerRatio">N/A</span><br>
+                Number of TotalFlyers brought 1 customer: <span id="totalFlyerCustomerRatio">N/A</span>
+            </div>
         </div>
     </div>
     <script>
@@ -175,8 +183,8 @@
         const handFlyerData = [320, 450, 520, 630, 710, 830, 910, 1020, 1110, 1230, 1340, 1450];
         const doorFlyerData = [250, 360, 470, 580, 690, 800, 920, 1030, 1140, 1250, 1370, 1480];
         const totalFlyerData = handFlyerData.map((num, idx) => num + doorFlyerData[idx]);
-        const qrHandData = [20, 3, 40, 55, 60, 70, 18, 90, 10, 110, 120, 200];
-        const qrDoorData = [15, 25, 5, 45, 55, 65, 15, 85, 95, 105, 115, 15];
+        const qrHandData = [20, 30, 40, 55, 60, 70, 80, 90, 100, 110, 120, 130];
+        const qrDoorData = [15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125];
         const qrTotalData = qrHandData.map((num, idx) => num + qrDoorData[idx]);
 
         let myChart;
@@ -285,6 +293,14 @@
                             document.getElementById('qrHand').textContent = valueQrHand;
                             document.getElementById('qrDoor').textContent = valueQrDoor;
                             document.getElementById('qrTotal').textContent = valueQrTotal;
+
+                            // Calculate and display ratios
+                            const handFlyerCustomerRatio = (valueQrHand > 0) ? (valueHandFlyer / valueQrHand).toFixed(2) : 'N/A';
+                            const doorFlyerCustomerRatio = (valueQrDoor > 0) ? (valueDoorFlyer / valueQrDoor).toFixed(2) : 'N/A';
+                            const totalFlyerCustomerRatio = (valueQrTotal > 0) ? (valueTotalFlyer / valueQrTotal).toFixed(2) : 'N/A';
+                            document.getElementById('handFlyerCustomerRatio').textContent = handFlyerCustomerRatio;
+                            document.getElementById('doorFlyerCustomerRatio').textContent = doorFlyerCustomerRatio;
+                            document.getElementById('totalFlyerCustomerRatio').textContent = totalFlyerCustomerRatio;
 
                             // Clear previous annotations
                             myChart.options.plugins.annotation.annotations = [];
